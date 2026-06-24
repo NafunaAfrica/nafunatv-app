@@ -1,22 +1,63 @@
-<div class="show-detail-content glass-panel">
-    <div class="show-detail-meta">
-        <a href="{{ route('home') }}" class="badge" style="text-decoration:none;">&larr; Back to Shows</a>
-        <span class="badge">{{ $show->category->name ?? 'Uncategorized' }}</span>
+<div class="relative bg-zinc-950 min-h-[50vh] border-b border-zinc-800">
+    <div class="absolute inset-0">
+        @php
+            $title = strtolower($show->title);
+            if (str_contains($title, 'beginning')) {
+                $thumbnailUrl = asset('images/angry_mwana_1.png');
+            } elseif (str_contains($title, 'city life')) {
+                $thumbnailUrl = asset('images/angry_mwana_2.png');
+            } elseif (str_contains($title, 'campus')) {
+                $thumbnailUrl = asset('images/nafuna_campus.png');
+            } elseif (str_contains($title, 'behind')) {
+                $thumbnailUrl = asset('images/behind_scenes.png');
+            } else {
+                $thumbnailUrl = asset('images/hero_banner.png');
+            }
+        @endphp
+        <img src="{{ $thumbnailUrl }}" alt="{{ $show->title }}" class="w-full h-full object-cover opacity-20 blur-xl">
+        <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-transparent"></div>
     </div>
-    
-    <h1 class="show-detail-title">{{ $show->title }}</h1>
-    
-    <div class="video-container">
-        @if($show->youtube_url)
-            <iframe src="{{ $show->youtube_url }}" title="{{ $show->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        @else
-            <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--text-muted); font-size: 1.2rem;">
-                Video coming soon
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div class="flex flex-col lg:flex-row gap-12 items-start">
+            <!-- Video Player Container -->
+            <div class="w-full lg:w-2/3">
+                <div class="aspect-video w-full rounded-2xl overflow-hidden shadow-2xl shadow-indigo-500/10 border border-zinc-800 bg-zinc-900">
+                    <iframe 
+                        src="{{ $show->youtube_url }}" 
+                        class="w-full h-full"
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
             </div>
-        @endif
-    </div>
-    
-    <div class="show-detail-desc">
-        {!! nl2br(e($show->description)) !!}
+
+            <!-- Info Container -->
+            <div class="w-full lg:w-1/3 space-y-8">
+                <a href="{{ url('/') }}" class="inline-flex items-center text-sm font-medium text-zinc-400 hover:text-white transition-colors bg-zinc-900/50 hover:bg-zinc-800 px-4 py-2 rounded-full border border-zinc-800 w-fit">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Back to Library
+                </a>
+
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">{{ $show->title }}</h1>
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">HD</span>
+                        <span class="text-zinc-400 text-sm">Original Series</span>
+                    </div>
+                    <p class="text-lg text-zinc-300 leading-relaxed">{{ $show->description }}</p>
+                </div>
+
+                <div class="pt-8 border-t border-zinc-800">
+                    <h3 class="text-lg font-bold text-white mb-4">Categories</h3>
+                    <div class="flex flex-wrap gap-2">
+                        @foreach($show->categories as $category)
+                            <span class="px-4 py-2 rounded-full bg-zinc-900 border border-zinc-800 text-sm text-zinc-300">{{ $category->name }}</span>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
