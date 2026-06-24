@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'database'),
+    'driver' => 'file', // Hardcoded to file to avoid sqlite readonly database crashes on Coolify
 
     /*
     |--------------------------------------------------------------------------
