@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
 #[Lazy]
-#[Layout('components.layouts.app')]
+#[Layout('layouts.app')]
 class ShowList extends Component
 {
     public function placeholder()

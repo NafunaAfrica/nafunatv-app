@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
 #[Lazy]
-#[Layout('components.layouts.app')]
+#[Layout('layouts.app')]
 class ShowDetail extends Component
 {
     public $show;
@@ -62,7 +62,7 @@ class ShowDetail extends Component
     public function render()
     {
         return view('livewire.show-detail')
-            ->layout('components.layouts.app', [
+            ->layout('layouts.app', [
                 'title' => $this->show->meta_title ?? $this->show->title . ' | NafunaTV',
                 'metaDescription' => $this->show->meta_description ?? $this->show->description
             ]);
