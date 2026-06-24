@@ -3,12 +3,10 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
-#[Lazy]
 #[Layout('layouts.app')]
 class ShowDetail extends Component
 {
@@ -41,22 +39,6 @@ class ShowDetail extends Component
         } else {
             $this->show->category = (object) ['name' => 'Uncategorized'];
         }
-    }
-
-    public function placeholder()
-    {
-        return <<<'HTML'
-        <div style="max-width: 1400px; margin: 0 auto; padding: 2rem 5%;">
-            <div class="show-detail-content glass-panel skeleton-container">
-                <div class="skeleton-pulse" style="width: 250px; height: 35px; border-radius: 20px; margin-bottom: 2rem;"></div>
-                <div class="skeleton-pulse" style="width: 80%; height: 60px; border-radius: 8px; margin-bottom: 1.5rem;"></div>
-                <div class="skeleton-pulse" style="width: 100%; aspect-ratio: 16/9; border-radius: 16px; margin-bottom: 2rem;"></div>
-                <div class="skeleton-pulse" style="width: 100%; height: 20px; border-radius: 4px; margin-bottom: 0.8rem;"></div>
-                <div class="skeleton-pulse" style="width: 90%; height: 20px; border-radius: 4px; margin-bottom: 0.8rem;"></div>
-                <div class="skeleton-pulse" style="width: 70%; height: 20px; border-radius: 4px;"></div>
-            </div>
-        </div>
-        HTML;
     }
 
     public function render()
