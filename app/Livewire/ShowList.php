@@ -3,11 +3,33 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\Attributes\Lazy;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
+#[Lazy]
 class ShowList extends Component
 {
+    public function placeholder()
+    {
+        return <<<'HTML'
+        <div class="skeleton-container" style="max-width: 1400px; margin: 0 auto; padding: 2rem 5%;">
+            <div class="skeleton-pulse" style="width: 100%; height: 450px; border-radius: 24px; margin-bottom: 4rem;"></div>
+            
+            <div class="glass-panel">
+                <div class="skeleton-pulse" style="width: 300px; height: 40px; border-radius: 8px; margin-bottom: 1rem;"></div>
+                <div class="skeleton-pulse" style="width: 500px; height: 20px; border-radius: 4px; margin-bottom: 2rem;"></div>
+                
+                <div class="shows-grid">
+                    <div class="skeleton-pulse" style="height: 320px; border-radius: 16px;"></div>
+                    <div class="skeleton-pulse" style="height: 320px; border-radius: 16px;"></div>
+                    <div class="skeleton-pulse" style="height: 320px; border-radius: 16px;"></div>
+                </div>
+            </div>
+        </div>
+        HTML;
+    }
+
     public function render()
     {
         // Cache raw arrays to avoid PHP incomplete class serialization errors
