@@ -4,10 +4,12 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\Attributes\Lazy;
+use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
 #[Lazy]
+#[Layout('components.layouts.app')]
 class ShowList extends Component
 {
     public function placeholder()
@@ -63,6 +65,6 @@ class ShowList extends Component
 
         return view('livewire.show-list', [
             'categories' => $categories
-        ])->layout('components.layouts.app');
+        ]);
     }
 }

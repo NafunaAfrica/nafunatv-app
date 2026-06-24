@@ -4,10 +4,12 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\Attributes\Lazy;
+use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
 #[Lazy]
+#[Layout('components.layouts.app')]
 class ShowDetail extends Component
 {
     public $show;
