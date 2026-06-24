@@ -19,7 +19,7 @@
                 <div class="shows-grid">
                     @foreach($category->shows as $show)
                         @php
-                            // Extract YouTube ID from URL (e.g. https://www.youtube.com/embed/dQw4w9WgXcQ)
+                            // Extract YouTube ID from URL
                             $ytId = null;
                             if (preg_match('/embed\/([a-zA-Z0-9_-]+)/', $show->youtube_url, $matches)) {
                                 $ytId = $matches[1];
