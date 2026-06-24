@@ -35,6 +35,6 @@ class ShowList extends Component
 
         return view('livewire.show-list', [
             'categories' => $categories
-        ]);
+        ])->layout('components.layouts.app');
     }
 }
