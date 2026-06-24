@@ -31,18 +31,13 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     @foreach($category->shows as $show)
                         @php
-                            $title = strtolower($show->title);
-                            if (str_contains($title, 'beginning')) {
-                                $thumbnailUrl = asset('images/angry_mwana_1.png');
-                            } elseif (str_contains($title, 'city life')) {
-                                $thumbnailUrl = asset('images/angry_mwana_2.png');
-                            } elseif (str_contains($title, 'campus')) {
-                                $thumbnailUrl = asset('images/nafuna_campus.png');
-                            } elseif (str_contains($title, 'behind')) {
-                                $thumbnailUrl = asset('images/behind_scenes.png');
-                            } else {
-                                $thumbnailUrl = asset('images/hero_banner.png');
+                            $ytId = null;
+                            if (preg_match('/embed\/([a-zA-Z0-9_-]+)/', $show->youtube_url, $matches)) {
+                                $ytId = $matches[1];
+                            } elseif (preg_match('/watch\?v=([a-zA-Z0-9_-]+)/', $show->youtube_url, $matches)) {
+                                $ytId = $matches[1];
                             }
+                            $thumbnailUrl = $ytId ? "https://img.youtube.com/vi/{$ytId}/maxresdefault.jpg" : asset('images/hero_banner.png');
                         @endphp
                         
                         <a href="{{ route('show.detail', $show->slug) }}" class="group relative flex flex-col bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden hover:border-indigo-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1">

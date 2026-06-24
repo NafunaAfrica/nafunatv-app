@@ -1,18 +1,13 @@
 <div class="relative bg-zinc-950 min-h-[50vh] border-b border-zinc-800">
     <div class="absolute inset-0">
         @php
-            $title = strtolower($show->title);
-            if (str_contains($title, 'beginning')) {
-                $thumbnailUrl = asset('images/angry_mwana_1.png');
-            } elseif (str_contains($title, 'city life')) {
-                $thumbnailUrl = asset('images/angry_mwana_2.png');
-            } elseif (str_contains($title, 'campus')) {
-                $thumbnailUrl = asset('images/nafuna_campus.png');
-            } elseif (str_contains($title, 'behind')) {
-                $thumbnailUrl = asset('images/behind_scenes.png');
-            } else {
-                $thumbnailUrl = asset('images/hero_banner.png');
+            $ytId = null;
+            if (preg_match('/embed\/([a-zA-Z0-9_-]+)/', $show->youtube_url, $matches)) {
+                $ytId = $matches[1];
+            } elseif (preg_match('/watch\?v=([a-zA-Z0-9_-]+)/', $show->youtube_url, $matches)) {
+                $ytId = $matches[1];
             }
+            $thumbnailUrl = $ytId ? "https://img.youtube.com/vi/{$ytId}/maxresdefault.jpg" : asset('images/hero_banner.png');
         @endphp
         <img src="{{ $thumbnailUrl }}" alt="{{ $show->title }}" class="w-full h-full object-cover opacity-20 blur-xl">
         <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-transparent"></div>
