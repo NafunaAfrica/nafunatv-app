@@ -2,9 +2,10 @@
     <div class="absolute inset-0">
         @php
             $ytId = null;
-            if (preg_match('/embed\/([a-zA-Z0-9_-]+)/', $show->youtube_url, $matches)) {
+            $url = $show->youtube_url ?? '';
+            if (preg_match('/embed\/([a-zA-Z0-9_-]+)/', $url, $matches)) {
                 $ytId = $matches[1];
-            } elseif (preg_match('/watch\?v=([a-zA-Z0-9_-]+)/', $show->youtube_url, $matches)) {
+            } elseif (preg_match('/watch\?v=([a-zA-Z0-9_-]+)/', $url, $matches)) {
                 $ytId = $matches[1];
             }
             $thumbnailUrl = $ytId ? "https://img.youtube.com/vi/{$ytId}/maxresdefault.jpg" : asset('images/hero_banner.png');
@@ -30,7 +31,7 @@
 
             <!-- Info Container -->
             <div class="w-full lg:w-1/3 space-y-8">
-                <a href="{{ url('/') }}" class="inline-flex items-center text-sm font-medium text-zinc-400 hover:text-white transition-colors bg-zinc-900/50 hover:bg-zinc-800 px-4 py-2 rounded-full border border-zinc-800 w-fit">
+                <a href="{{ url('/') }}" wire:navigate class="inline-flex items-center text-sm font-medium text-zinc-400 hover:text-white transition-colors bg-zinc-900/50 hover:bg-zinc-800 px-4 py-2 rounded-full border border-zinc-800 w-fit">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Back to Library
                 </a>
@@ -45,11 +46,11 @@
                 </div>
 
                 <div class="pt-8 border-t border-zinc-800">
-                    <h3 class="text-lg font-bold text-white mb-4">Categories</h3>
+                    <h3 class="text-lg font-bold text-white mb-4">Category</h3>
                     <div class="flex flex-wrap gap-2">
-                        @foreach($show->categories as $category)
-                            <span class="px-4 py-2 rounded-full bg-zinc-900 border border-zinc-800 text-sm text-zinc-300">{{ $category->name }}</span>
-                        @endforeach
+                        @if(isset($show->category))
+                            <span class="px-4 py-2 rounded-full bg-zinc-900 border border-zinc-800 text-sm text-zinc-300">{{ $show->category->name }}</span>
+                        @endif
                     </div>
                 </div>
             </div>
