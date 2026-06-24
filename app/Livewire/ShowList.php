@@ -13,7 +13,7 @@ class ShowList extends Component
     public function render()
     {
         // Cache raw arrays to avoid PHP incomplete class serialization errors
-        $categoriesData = Cache::remember('directus_categories_shows_v2', 300, function () {
+        $categoriesData = Cache::remember('directus_categories_shows_v3', 300, function () {
             // Fetch from Directus API
             $categoriesResponse = Http::get('https://data.nafuna.africa/items/nafunatv_categories');
             $showsResponse = Http::get('https://data.nafuna.africa/items/nafunatv_shows');
