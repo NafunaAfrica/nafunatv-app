@@ -2,10 +2,10 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
-use Livewire\Attributes\Layout;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
+use Livewire\Attributes\Layout;
+use Livewire\Component;
 
 #[Layout('layouts.app')]
 class ShowList extends Component
@@ -15,19 +15,20 @@ class ShowList extends Component
         // Cache raw arrays to avoid PHP incomplete class serialization errors
         $categoriesData = Cache::remember('directus_categories_shows_v3', 300, function () {
             // Fetch from Directus API
-            $categoriesResponse = Http::get('https://data.nafuna.africa/items/nafunatv_categories');
-            $showsResponse = Http::get('https://data.nafuna.africa/items/nafunatv_shows');
-            
+            $categoriesResponse = Http::withoutVerifying()->get('https://data.nafuna.africa/items/nafunatv_categories');
+            $showsResponse = Http::withoutVerifying()->get('https://data.nafuna.africa/items/nafunatv_shows');
+
             if ($categoriesResponse->failed() || $showsResponse->failed()) {
                 return [];
             }
-            
+
             $cats = $categoriesResponse->json('data') ?? [];
             $shows = collect($showsResponse->json('data') ?? []);
-            
+
             // Map shows to their respective categories as pure arrays
             return collect($cats)->map(function ($cat) use ($shows) {
                 $cat['shows'] = $shows->where('category_id', $cat['id'])->values()->all();
+
                 return $cat;
             })->all();
         });
@@ -38,11 +39,12 @@ class ShowList extends Component
             $obj->shows = collect($cat['shows'] ?? [])->map(function ($show) {
                 return (object) $show;
             })->all();
+
             return $obj;
         })->all();
 
         return view('livewire.show-list', [
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 }

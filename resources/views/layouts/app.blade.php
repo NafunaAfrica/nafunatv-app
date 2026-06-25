@@ -17,34 +17,19 @@
 </head>
 <body class="min-h-screen bg-white dark:bg-zinc-800">
     <flux:header container class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
-        <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
-
         <a href="{{ url('/') }}" class="flex items-center gap-2">
             <img src="{{ asset('images/nafunatv-logo.svg') }}" alt="NafunaTV" class="h-8 w-auto">
             <span class="font-bold text-xl tracking-tight dark:text-white text-zinc-900">Nafuna<span class="text-indigo-500">TV</span></span>
         </a>
 
-        <flux:navbar class="-mb-px max-lg:hidden">
+        <flux:spacer />
+
+        <flux:navbar class="-mb-px">
             <flux:navbar.item href="https://nafuna.africa" target="_blank">Visit Nafuna Africa</flux:navbar.item>
         </flux:navbar>
-
-        <flux:spacer />
     </flux:header>
 
-    <flux:sidebar stashable sticky class="lg:hidden bg-zinc-50 dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-700">
-        <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
-
-        <a href="{{ url('/') }}" class="flex items-center gap-2 px-2">
-            <img src="{{ asset('images/nafunatv-logo.svg') }}" alt="NafunaTV" class="h-8 w-auto">
-            <span class="font-bold text-xl tracking-tight dark:text-white text-zinc-900">Nafuna<span class="text-indigo-500">TV</span></span>
-        </a>
-
-        <flux:navlist variant="outline">
-            <flux:navlist.item icon="arrow-top-right-on-square" href="https://nafuna.africa" target="_blank">Visit Nafuna Africa</flux:navlist.item>
-        </flux:navlist>
-    </flux:sidebar>
-
-    <flux:main container>
+    <flux:main>
         {{ $slot }}
     </flux:main>
 
