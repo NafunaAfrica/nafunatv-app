@@ -17,15 +17,12 @@
     </div>
 
     <!-- Categories Section -->
-    <div id="categories" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 space-y-24">
+    <div class="py-12 space-y-16">
         @foreach($categories as $category)
             <section class="category-section">
-                <div class="mb-10">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight mb-3 flex items-center gap-3">
-                        <span class="w-2 h-8 bg-indigo-500 rounded-full"></span>
-                        {{ $category->name }}
-                    </h2>
-                    <p class="text-zinc-400 text-lg max-w-3xl pl-5">{{ $category->description }}</p>
+                <div class="mb-8">
+                    <flux:heading size="xl" class="mb-2">{{ $category->name }}</flux:heading>
+                    <flux:subheading size="lg">{{ $category->description }}</flux:subheading>
                 </div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -41,20 +38,17 @@
                             $thumbnailUrl = $ytId ? "https://img.youtube.com/vi/{$ytId}/maxresdefault.jpg" : asset('images/hero_banner.png');
                         @endphp
                         
-                        <a href="{{ route('show.detail', $show->slug) }}" wire:navigate class="group relative flex flex-col bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden hover:border-indigo-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1">
-                            <div class="aspect-video w-full overflow-hidden relative">
-                                <img src="{{ $thumbnailUrl }}" alt="{{ $show->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white scale-75 group-hover:scale-100 transition-transform duration-300">
-                                        <svg class="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                    </div>
+                        <flux:card class="p-0 overflow-hidden flex flex-col group hover:ring-2 hover:ring-indigo-500 transition-all cursor-pointer">
+                            <a href="{{ route('show.detail', $show->slug) }}" wire:navigate class="flex flex-col h-full">
+                                <div class="aspect-video w-full overflow-hidden relative">
+                                    <img src="{{ $thumbnailUrl }}" alt="{{ $show->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                 </div>
-                            </div>
-                            <div class="p-5 flex flex-col flex-grow">
-                                <h3 class="text-lg font-bold text-white mb-2 line-clamp-1 group-hover:text-indigo-400 transition-colors">{{ $show->title }}</h3>
-                                <p class="text-sm text-zinc-400 line-clamp-2 leading-relaxed">{{ $show->description }}</p>
-                            </div>
-                        </a>
+                                <div class="p-4 flex flex-col flex-grow">
+                                    <flux:heading size="lg" class="line-clamp-1 mb-1">{{ $show->title }}</flux:heading>
+                                    <flux:subheading class="line-clamp-2">{{ $show->description }}</flux:subheading>
+                                </div>
+                            </a>
+                        </flux:card>
                     @endforeach
                 </div>
             </section>
