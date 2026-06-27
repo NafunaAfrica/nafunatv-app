@@ -37,14 +37,63 @@ class ShowList extends Component
         $categories = collect($categoriesData)->map(function ($cat) {
             $obj = (object) $cat;
             $obj->shows = collect($cat['shows'] ?? [])->map(function ($show) {
-                return (object) $show;
+                $showObj = (object) $show;
+                $showObj->youtube_id = $this->getYoutubeId($showObj->youtube_url);
+                $showObj->thumbnail_url = $showObj->youtube_id
+                    ? "https://img.youtube.com/vi/{$showObj->youtube_id}/hqdefault.jpg"
+                    : asset('images/hero_banner.png');
+
+                return $showObj;
             })->all();
 
             return $obj;
         })->all();
 
+        // Select a featured show for the hero banner (prefer JBoss Dai or first available show)
+        $featuredShow = null;
+        foreach ($categories as $cat) {
+            foreach ($cat->shows as $show) {
+                if ($show->slug === 'jboss-dai-official-music-video') {
+                    $featuredShow = $show;
+                    break 2;
+                }
+            }
+        }
+
+        // Fallback to first show if no specific match
+        if (! $featuredShow && ! empty($categories)) {
+            foreach ($categories as $cat) {
+                if (! empty($cat->shows)) {
+                    $featuredShow = $cat->shows[0];
+                    break;
+                }
+            }
+        }
+
         return view('livewire.show-list', [
             'categories' => $categories,
+            'featuredShow' => $featuredShow,
         ]);
+    }
+
+    private function getYoutubeId(?string $url): ?string
+    {
+        if (! $url) {
+            return null;
+        }
+
+        if (preg_match('/embed\/([a-zA-Z0-9_-]+)/', $url, $matches)) {
+            return $matches[1];
+        }
+
+        if (preg_match('/watch\?v=([a-zA-Z0-9_-]+)/', $url, $matches)) {
+            return $matches[1];
+        }
+
+        if (preg_match('/youtu\.be\/([a-zA-Z0-9_-]+)/', $url, $matches)) {
+            return $matches[1];
+        }
+
+        return null;
     }
 }
