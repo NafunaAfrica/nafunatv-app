@@ -17,15 +17,18 @@
 </head>
 <body class="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
     <flux:header class="bg-zinc-950/80 backdrop-blur-md border-b border-zinc-900 sticky top-0 z-50 px-4 sm:px-6 lg:px-8">
-        <a href="{{ url('/') }}" class="flex items-center gap-2">
+        <a href="{{ url('/') }}" class="flex items-center">
             <img src="{{ asset('images/nafunatv-logo.svg') }}" alt="NafunaTV" class="h-8 w-auto">
-            <span class="font-bold text-xl tracking-tight text-white">Nafuna<span class="text-indigo-500">TV</span></span>
         </a>
 
         <flux:spacer />
 
-        <flux:navbar class="-mb-px">
-            <flux:navbar.item href="https://nafuna.africa" target="_blank" class="text-zinc-400 hover:text-white">Visit Nafuna Africa</flux:navbar.item>
+        <flux:navbar class="-mb-px gap-4 md:gap-6">
+            <flux:navbar.item href="{{ url('/') }}" class="text-zinc-300 hover:text-white font-medium text-sm">Home</flux:navbar.item>
+            <flux:navbar.item href="{{ url('/#web-series') }}" class="text-zinc-400 hover:text-white font-medium text-sm hidden sm:inline-flex">Web Series</flux:navbar.item>
+            <flux:navbar.item href="{{ url('/#talk-discussion') }}" class="text-zinc-400 hover:text-white font-medium text-sm hidden sm:inline-flex">Talk Shows</flux:navbar.item>
+            <flux:navbar.item href="{{ url('/#animation-tech') }}" class="text-zinc-400 hover:text-white font-medium text-sm hidden sm:inline-flex">Animations</flux:navbar.item>
+            <flux:navbar.item href="https://nafuna.africa" target="_blank" class="text-zinc-400 hover:text-white font-medium text-sm">Visit Nafuna Africa</flux:navbar.item>
         </flux:navbar>
     </flux:header>
 

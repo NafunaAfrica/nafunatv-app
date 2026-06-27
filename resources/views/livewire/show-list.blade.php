@@ -40,15 +40,23 @@
     <!-- Scrollable Categories Section -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16" id="categories">
         @foreach($categories as $category)
+            @php
+                $sectionId = match(true) {
+                    str_contains(strtolower($category->name), 'web') => 'web-series',
+                    str_contains(strtolower($category->name), 'talk') => 'talk-discussion',
+                    str_contains(strtolower($category->name), 'animation') => 'animation-tech',
+                    default => 'category-' . $category->id
+                };
+            @endphp
             @if(count($category->shows) > 0)
-                <section class="space-y-6">
+                <section id="{{ $sectionId }}" class="space-y-6 scroll-mt-24">
                     <div class="border-l-4 border-indigo-500 pl-4">
                         <flux:heading size="xl" class="text-white font-bold tracking-tight">{{ $category->name }}</flux:heading>
                         <flux:subheading size="sm" class="text-zinc-400 mt-1">{{ $category->description }}</flux:subheading>
                     </div>
                     
                     <!-- Horizontal Scroll Container -->
-                    <div class="flex gap-6 overflow-x-auto pb-6 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
+                    <div class="flex gap-6 overflow-x-auto pb-4 scrollbar-thin px-4 -mx-4">
                         @foreach($category->shows as $show)
                             <div class="w-[280px] sm:w-[320px] flex-shrink-0 group">
                                 <a href="{{ route('show.detail', $show->slug) }}" wire:navigate class="space-y-3 block">
@@ -76,6 +84,7 @@
                                 </a>
                             </div>
                         @endforeach
+                        <div class="w-4 flex-shrink-0"></div>
                     </div>
                 </section>
             @endif
