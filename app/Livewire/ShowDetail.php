@@ -15,6 +15,19 @@ class ShowDetail extends Component
 
     public function mount($slug)
     {
+        $redirectMap = [
+            'angry-mwana-the-beginning' => 'the-nafuna-devlog-s02e01-nafuna-avenues-mobile-game-and-animated-series-update',
+            'angry-mwana-city-life' => 'nafuna-africa-explainer-part-01',
+            'the-couch-trending-topics' => 'the-nafuna-devlog-november-edition',
+            'twunyaya-taboo-topics' => 'we-stopped-making-just-videos-heres-why-annual-report-2026',
+            'nafuna-campus-digital-transformation' => 'nafuna-campus-free-digital-transformation-101-lesson-01',
+            'behind-the-scenes-nafuna-animation' => 'a-style-test-rigging-in-moho-african-animation',
+        ];
+
+        if (array_key_exists($slug, $redirectMap)) {
+            return redirect()->route('show.detail', ['slug' => $redirectMap[$slug]]);
+        }
+
         // Fetch specific show from Directus API
         $response = Http::withoutVerifying()->get('https://data.nafuna.africa/items/nafunatv_shows', [
             'filter' => [
@@ -29,7 +42,7 @@ class ShowDetail extends Component
         $shows = $response->json('data') ?? [];
 
         if (empty($shows)) {
-            abort(404);
+            return redirect()->route('home');
         }
 
         $this->show = (object) $shows[0];
